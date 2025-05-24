@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     from: `"Mirobex contact" <${config.smtpUser}>`,
     to: config.smtpFrom,
     replyTo: body.email,
-    bcc: ['steveasterafovo@gmail.com', 'steveasterafovo@gmail.com'],
+    bcc: ['contact@mirobex.bj', 'steveasterafovo@gmail.com'],
     subject: `[Mirobex] : ${body.subject} depuis contact - ${ticketNumber}`,
     text: `
       Nouveau message de contact reçu sur Mirobex
