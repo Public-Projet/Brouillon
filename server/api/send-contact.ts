@@ -2,11 +2,11 @@ import { createTransport } from 'nodemailer'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-
+  
   // useRuntimeConfig pour accéder aux variables d'environnement
   const config = useRuntimeConfig()
 
-  // DEBUGGING:
+    // DEBUGGING:
   console.log('--- Nuxt Runtime Config on Server ---');
   console.log('SMTP_HOST:', config.smtpHost);
   console.log('SMTP_PORT:', config.smtpPort);
@@ -18,11 +18,10 @@ export default defineEventHandler(async (event) => {
   console.log('-----------------------------------');
 
   // Vérification des variables d'environnement
-  if (!config.smtpUser || !config.smtpPass || !config.smtpHost || !config.smtpPort) {
-    console.error('Configuration SMTP manquante. Vérifiez les variables d\'environnement Netlify.');
+  if (!config.smtpUser || !config.smtpPass) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Configuration SMTP manquante. Veuillez contacter l'administrateur."
+      statusMessage: "Configuration SMTP manquante"
     })
   }
 
@@ -47,10 +46,6 @@ export default defineEventHandler(async (event) => {
 
   // Générer un numéro de ticket unique
   const ticketNumber = Date.now()
-
-  // Pièces jointes en Base64
-  const logoLongBase64Data = 'data:image/png;base64,YOUR_BASE64_LOGO_LONG_DATA';
-  const logoBase64Data = 'data:image/png;base64,YOUR_BASE64_LOGO_DATA';
 
   // Email de notification pour l'équipe
   const adminMailOptions = {
@@ -86,6 +81,7 @@ export default defineEventHandler(async (event) => {
       <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           
+          <!-- Header -->
           <div style="background: linear-gradient(135deg,rgb(188, 216, 237) 0%,rgb(198, 199, 199) 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
             <img src="cid:logoHeader" alt="Logo Mirobex" style="max-height: 80px; margin-bottom: 8px;">
             <h1 style="color: #2d3748; margin: 0; font-size: 28px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
@@ -101,7 +97,9 @@ export default defineEventHandler(async (event) => {
             </div>
           </div>
           
+          <!-- Corps -->
           <div style="padding: 40px 30px;">
+            <!-- Informations du contact -->
             <div style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #667eea;">
               <h2 style="color: #2d3748; margin: 0 0 20px 0; font-size: 20px; font-weight: 600; display: flex; align-items: center; border-bottom: 1px solid #e2e8f0;">
                 👤 <span style="margin-left: 8px;">Détails du contact</span>
@@ -138,6 +136,7 @@ export default defineEventHandler(async (event) => {
               </div>
             </div>
             
+            <!-- Message -->
             <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #0ea5e9;">
               <h2 style="color: #2d3748; margin: 0 0 20px 0; font-size: 20px; font-weight: 600; display: flex; align-items: center; border-bottom: 1px solid #e2e8f0;">
                 💬 <span style="margin-left: 8px;">Contenu du message</span>
@@ -147,6 +146,7 @@ export default defineEventHandler(async (event) => {
               </div>
             </div>
             
+            <!-- Boutons d'action -->
             <div style="text-align: center; margin: 30px 0;">
               <a href="mailto:${body.email}?subject=RE: ${body.subject} - Ticket ${ticketNumber}" 
                  style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease;">
@@ -155,6 +155,7 @@ export default defineEventHandler(async (event) => {
             </div>
           </div>
           
+          <!-- Footer -->
           <div style="background: linear-gradient(135deg,rgb(169, 195, 252) 0%,rgb(230, 229, 232) 100%); padding: 30px; border-radius: 0 0 8px 8px; text-align: center; color: #000000;">
             <div style="margin-bottom: 20px;">
               <img src="cid:logoFooter" alt="Logo Mirobex" style="max-width: 60px; height: auto; opacity: 0.7;">
@@ -190,15 +191,13 @@ export default defineEventHandler(async (event) => {
     `,
     attachments: [
       {
-        filename: 'logoLong.png',
-        content: logoLongBase64Data.split(',')[1], 
-        encoding: 'base64',
+        filename: 'Typo logo',
+        path: 'https://raw.githubusercontent.com/Repo-Files/Mirobex/refs/heads/main/img/logoLong.png',
         cid: 'logoHeader'
       },
       {
-        filename: 'logo.png',
-        content: logoBase64Data.split(',')[1], 
-        encoding: 'base64',
+        filename: 'Base logo',
+        path: 'https://raw.githubusercontent.com/Repo-Files/Mirobex/refs/heads/main/img/logo.png',
         cid: 'logoFooter'
       }
     ]
@@ -246,6 +245,7 @@ export default defineEventHandler(async (event) => {
       <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           
+          <!-- Header -->
           <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
             <img src="cid:logoHeader" alt="Logo Mirobex" style="max-height: 80px; margin-bottom: 8px;">
             <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
@@ -261,7 +261,9 @@ export default defineEventHandler(async (event) => {
             </div>
           </div>
           
+          <!-- Corps -->
           <div style="padding: 40px 30px;">
+            <!-- Message de bienvenue -->
             <div style="text-align: center; margin-bottom: 30px;">
               <h2 style="color: #2d3748; margin: 0 0 15px 0; font-size: 24px; font-weight: 600;">
                 👋 Bonjour ${body.name} !
@@ -271,6 +273,7 @@ export default defineEventHandler(async (event) => {
               </p>
             </div>
             
+            <!-- Résumé de la demande -->
             <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #3b82f6;">
               <h3 style="color: #2d3748; margin: 0 0 20px 0; font-size: 18px; font-weight: 600; display: flex; align-items: center;">
                 📋 <span style="margin-left: 8px;">Résumé de votre demande</span>
@@ -290,6 +293,7 @@ export default defineEventHandler(async (event) => {
               </div>
             </div>
             
+            <!-- Prochaines étapes -->
             <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #f59e0b;">
               <h3 style="color: #2d3748; margin: 0 0 20px 0; font-size: 18px; font-weight: 600; display: flex; align-items: center;">
                 ⏰ <span style="margin-left: 8px;">Prochaines étapes</span>
@@ -308,6 +312,7 @@ export default defineEventHandler(async (event) => {
               </div>
             </div>
             
+            <!-- Contact d'urgence -->
             <div style="background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%); padding: 20px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #ef4444;">
               <h3 style="color: #2d3748; margin: 0 0 15px 0; font-size: 16px; font-weight: 600; display: flex; align-items: center;">
                 🚨 <span style="margin-left: 8px;">Besoin d'une réponse urgente ?</span>
@@ -321,6 +326,7 @@ export default defineEventHandler(async (event) => {
             </div>
           </div>
           
+          <!-- Footer -->
           <div style="background: linear-gradient(135deg,rgb(169, 195, 252) 0%,rgb(230, 229, 232) 100%); padding: 30px; border-radius: 0 0 8px 8px; text-align: center; color: #000000;">
             <div style="margin-bottom: 20px;">
               <img src="cid:logoFooter" alt="Logo Mirobex" style="max-width: 60px; height: auto; opacity: 0.7;">
@@ -359,15 +365,13 @@ export default defineEventHandler(async (event) => {
     `,
     attachments: [
       {
-        filename: 'logoLong.png',
-        content: logoLongBase64Data.split(',')[1], 
-        encoding: 'base64',
+        filename: 'Typo logo',
+        path: 'https://raw.githubusercontent.com/Repo-Files/Mirobex/refs/heads/main/img/logoLong.png',
         cid: 'logoHeader'
       },
       {
-        filename: 'logo.png',
-        content: logoBase64Data.split(',')[1], 
-        encoding: 'base64',
+        filename: 'Base logo',
+        path: 'https://raw.githubusercontent.com/Repo-Files/Mirobex/refs/heads/main/img/logo.png',
         cid: 'logoFooter'
       }
     ]
@@ -376,9 +380,9 @@ export default defineEventHandler(async (event) => {
   try {
     await transporter.sendMail(adminMailOptions)
     await transporter.sendMail(clientMailOptions)
-
-    return {
-      success: true,
+    
+    return { 
+      success: true, 
       message: 'Message envoyé avec succès',
       ticketNumber: ticketNumber
     }

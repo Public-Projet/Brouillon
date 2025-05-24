@@ -28,7 +28,7 @@ export default defineNuxtConfig({
         // Open Graph (Facebook, LinkedIn)
         { property: 'og:title', content: 'Mirobex - Développez votre entreprise au Bénin' },
         { property: 'og:description', content: 'Nous aidons les entreprises à entrer efficacement sur le marché béninois.' },
-        { property: 'og:image', content: '/img/seo.png' },
+        { property: 'og:image', content: 'https://raw.githubusercontent.com/Repo-Files/Mirobex/refs/heads/main/img/seo.jpg' },
         { property: 'og:url', content: 'https://mirobex.bj' },
         { property: 'og:type', content: 'website' },
         { property: 'og:locale', content: 'fr_FR' },
@@ -37,7 +37,7 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Mirobex - Développez votre entreprise au Bénin' },
         { name: 'twitter:description', content: 'Nous aidons les entreprises à entrer efficacement sur le marché béninois.' },
-        { name: 'twitter:image', content: '/img/seo.png' },
+        { name: 'twitter:image', content: 'https://raw.githubusercontent.com/Repo-Files/Mirobex/refs/heads/main/img/seo.jpg' },
       ],
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.ico' },

@@ -52,11 +52,11 @@ import { IconSquareRoundedArrowLeft, IconSquareRoundedArrowRight } from '@tabler
 const partenaires = [
   { name: "Zebra",
   description: "Leader mondial des produits de traçabilité",
-  logo: "/img/LogoZebra.png" },
+  logo: "/img/OLD/LogoZebra.png" },
 
   { name: "Perfecto",
   description: "Logiciel de gestion et d’optimisation des opérations commerciales",
-  logo: "/img/LogoPerfecto.png" },
+  logo: "/img/OLD/LogoPerfecto.png" },
 
   { name: "Constructeurs informatiques",
   description: "Représentation de grandes marques pour le marché béninois" },
